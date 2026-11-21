@@ -1,8 +1,12 @@
-Name: droid-hal-version-halium-blueline
-Version: 0.1
-Release: 2
-Summary: Google Pixel 3 Halium adaptation identity
-License: GPLv2
+%define device halium-blueline
+%define vendor google
+%define vendor_pretty Google
+%define device_pretty Pixel 3
+%define have_vibrator_native 1
+%define have_kernel_modules 1
+
+# The upstream version starts at 0.0.1; retain upgrade ordering from 0.1-2.
+Epoch: 1
 BuildArch: noarch
 AutoReqProv: no
 Provides: droid-hal-version
@@ -10,23 +14,14 @@ Provides: hw-release
 Requires: droid-config-halium-blueline
 Requires: kernel-adaptation-halium-blueline
 
-%description
-Hardware identity for the AOSP Android 12 Google Pixel 3 Sailfish adaptation.
+%include droid-hal-version/droid-hal-version.inc
 
-%install
-mkdir -p %{buildroot}/etc
-cat > %{buildroot}/etc/hw-release <<'HWRELEASE'
-NAME="Google Pixel 3"
-ID=halium-blueline
-VERSION_ID=0.1
-PRETTY_NAME="Google Pixel 3 (Halium 12)"
-MER_HA_DEVICE=halium-blueline
+# Preserve the Halium identity fields used by this adaptation.
+cat >> %{buildroot}%{_prefix}/lib/hw-release <<'HWRELEASE'
 SAILFISH_VENDOR=google
 SAILFISH_DEVICE=halium-blueline
 SAILFISH_PRODUCT=halium-blueline
 SAILFISH_ARCH=aarch64
 SAILFISH_TYPE=community
 HWRELEASE
-
-%files
-/etc/hw-release
+cp %{buildroot}%{_prefix}/lib/hw-release %{buildroot}%{_datadir}/doc/SailfishOS/hw-release
