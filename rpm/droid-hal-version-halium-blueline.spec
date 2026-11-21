@@ -5,6 +5,10 @@
 %define have_vibrator_native 1
 %define have_kernel_modules 1
 
+# The version metapackage only generates hardware identity and build metadata.
+#!BuildIgnore: droid-hal-img-boot
+#!BuildIgnore: droid-hal-img-recovery
+
 # The upstream version starts at 0.0.1; retain upgrade ordering from 0.1-2.
 Epoch: 1
 BuildArch: noarch
